@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
+import Button from './Button.jsx';
+import CustomInputLabel from './CustomInputLabel.jsx';
+
 const ControlContainer = styled.div`
  display: flex;
   flex-direction: column;
@@ -10,46 +13,6 @@ const ControlContainer = styled.div`
 
 // ControlContainer is written as CamelCase because it is know the custom component which is returning div
 //  on which the above styles have been applied
-
-const Label = styled.label`
- display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: ${({$invalid}) => $invalid ? '#f87171' : '#6b7280'} ;
-`;
-
-// Again Label is starting with an uppercase character since it will store a React
-//  component inside of it and create it with styled.label.
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.75rem 1rem;
-  line-height: 1.5;
-  background-color:  ${({$invalid})=> $invalid ? '#fed2d2' : '#d1d5db'};
-  color: ${({$invalid})=> $invalid ? '#ef4444' : '#374151'};
-  border: 1px solid ${({$invalid})=> $invalid ? '#f73f3f' : 'transparent'};
-  border-radius: 0.25rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-`
-
-const Button =  styled.button`
-  padding: 1rem 2rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 0.25rem;
-  color: #1f2937;
-  background-color: #f0b322;
-  border-radius: 6px;
-  border: none;
-
-  &:hover {
-    background-color: #f0920e;
-  }
-`;
-
 
 export default function AuthInputs() {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -74,27 +37,24 @@ export default function AuthInputs() {
   return (
     <div id="auth-inputs">
       <ControlContainer>
-        <p>
-          <Label $invalid= {emailNotValid} >Email</Label>
-          <Input
-            type="email"
-            $invalid= {emailNotValid}
-            // style={{
-            //   background: emailNotValid ? '#fed2d2' : '#d1d5db'
-            // }}
-            onChange={(event) => handleInputChange('email', event.target.value)}
-          />
-        </p>
-        <p>
-          <Label $invalid={passwordNotValid}>Password</Label>
-          <Input
-            type="password"
-            $invalid={passwordNotValid}
-            onChange={(event) =>
-              handleInputChange('password', event.target.value)
-            }
-          />
-        </p>
+        <CustomInputLabel
+          type="email"
+          invalid={emailNotValid}
+          label="Email"
+          // style={{
+          //   background: emailNotValid ? '#fed2d2' : '#d1d5db'
+          // }}
+          onChange={(event) => handleInputChange('email', event.target.value)}
+        />
+
+        <CustomInputLabel
+          type="password"
+          invalid={passwordNotValid}
+          label="Password"
+          onChange={(event) =>
+            handleInputChange('password', event.target.value)
+          }
+        />
       </ControlContainer>
       <div className="actions">
         <button type="button" className="text-button">
